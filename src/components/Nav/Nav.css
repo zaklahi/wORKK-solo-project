@@ -3,9 +3,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  
+  
 
   margin: 0 0 30px;
-  background-color: #00acb0;
+  background-color: #580000;
   overflow: hidden;
 }
 
@@ -16,9 +18,11 @@
 .nav-title {
   font-size: 24px;
   font-weight: 700;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   color: #f2f2f2;
   padding-left: 10px;
   margin: 0;
+  
 }
 
 .navLink {
