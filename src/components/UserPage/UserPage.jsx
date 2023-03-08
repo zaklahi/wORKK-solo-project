@@ -21,18 +21,18 @@ function UserPage() {
 
 
   useEffect(() => {
-    dispatch({ type: 'FETCH_WORKOUTEXERCISES' });
+    dispatch({ type: 'FETCH_WORKOUTS' });
   }, []);
  
  
   const handleClickOne = () => {
    
-    history.push(`/home`)
+    history.push(`/workout`)
   }
 
-  const handleClickTwo = (section) => {
+  const handleClickTwo = (workoutDisplay) => {
     
-    history.push(`/home`)
+    history.push(`/`)
 
   }
 

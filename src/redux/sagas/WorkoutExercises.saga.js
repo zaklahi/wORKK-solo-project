@@ -18,7 +18,7 @@ function* fetchWorkoutExcercises(action) {
     // now that the session has given us a user object
     // with an id and username set the client-side user object to let
     // the client-side code know the user is logged in
-    yield put({ type: 'SET_WORKOUTEXERCISES', payload: response.data});
+    yield put({ type: 'SET_WORKOUTS', payload: response.data});
   } catch (error) {
     console.log('User get request failed', error);
   }
@@ -28,23 +28,37 @@ function* createWorkout(action) {
   try {
     console.log(action.payload)
       // This route should return the id of the created workout
-      const response = yield axios.post('/api/workout/new', action.payload);
+      const response = yield axios.post('/api/workout', action.payload);
       for(let workoutExercise of action.payload.workoutExercise) {
           workoutExercise.workoutId = response.data.id;
-          yield axios.post('/api/workout/exercise', workoutExercise);
+          yield axios.post('/api/workout/new', workoutExercise);
       }
-      yield put({ type: 'FETCH_WORKOUTEXERCISES' });
+      yield put({ type: 'FETCH_WORKOUTS' });
   } catch (error) {
       console.log('Something went wrong', error);
       alert('Something went wrong.');
   }
 }
 
+
+function* addWorkout(action) {
+  try {
+      yield axios.post(`api/workout`, action.payload);
+      if (action.history) {
+          // Redirect back to the movie list
+          action.history.push('/');
+      }
+  } catch (e) {
+      console.log(e);
+  }
+}
+
 function* workoutExercisesSaga() {
-  yield takeLatest('FETCH_WORKOUTEXERCISES', fetchWorkoutExcercises
+  yield takeLatest('FETCH_WORKOUTS', fetchWorkoutExcercises
   );
-  yield takeLatest('POST_WORKOUTEXERCISES', createWorkout
+  yield takeLatest('POST_WORKOUTS', createWorkout
   );
+  yield takeLatest('ADD_WORKOUT', addWorkout);
 }
 
 export default workoutExercisesSaga;
