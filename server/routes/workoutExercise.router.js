@@ -23,6 +23,25 @@ console.log('user is', req.user)
     })
 
 });
+
+router.get('/', (req, res) => {
+  console.log('user is', req.user)
+    const query = `SELECT  "UserWorkout".*, "Exercise"."Exercise_Type", "Workout_Exercises"."Reps", "Workout_Exercises"."Sets", "Workout_Exercises"."Weight"
+    FROM "UserWorkout"
+    JOIN "Workout_Exercises" ON "UserWorkout"."WorkoutId" = "Workout_Exercises"."WorkoutId"
+    JOIN "Exercise" ON "Workout_Exercises"."Exercise_Id" = "Exercise"."Exercise_Id"
+    WHERE "UserWorkout"."user_id"  = $1;
+    ;`;
+    pool.query(query, [req.user.id])
+      .then( result => {
+        res.send(result.rows);
+      })
+      .catch(err => {
+        console.log('ERROR: Get all exercises', err);
+        res.sendStatus(500)
+      })
+  
+  });
 /// this query will return an id and create a workout
 router.post('/', (req, res) => {
   console.log(req.body)
@@ -49,6 +68,30 @@ router.post('/exercise', (req, res) => {
 
 });
 
+router.put('/:id', (req, res) => {
+  // Update this single student
+  const userId = req.user.id
+  const entry = req.body;
+  const sqlParams = [userId, entry.reps, entry.sets, entry.weight, entry.notes, req.params.id]
+  const sqlText = `UPDATE "Workout_Exercises" SET "Reps" = $1, "Sets" = $2, "Weight" = $3, "Notes" = $4 
+  WHERE "WorkoutId" = $5;`;
+  pool.query(sqlText, [sqlParams, sqlText])
+      .then((result) => {
+          res.sendStatus(200);
+      })
+      .catch((error) => {
+          console.log(`Error making database query ${sqlText}`, error);
+          res.sendStatus(500);
+      });
+});
+
+
+
+
+
+
+
+
 router.delete('/:id', (req, res) => {
   console.log('req.body', req.params.id);
   // allow to DELETE if the user is authenticated
@@ -56,7 +99,7 @@ router.delete('/:id', (req, res) => {
     let id = req.params.id;
     const queryText = `
     DELETE FROM "Workout_Exercises"
-    WHERE id = $1;`;
+    WHERE WorkoutId = $1;`;
     pool
       .query(queryText, [id])
       .then((result) => {

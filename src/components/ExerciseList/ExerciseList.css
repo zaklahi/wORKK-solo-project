@@ -1,0 +1,20 @@
+.ezercises {
+    display : flex;
+    flex-wrap: wrap;
+    background-color: rgb(203, 204, 216);
+}
+
+
+img:hover {
+    transform: scale(1.10);
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+  }
+
+
+img {
+    border-radius: 50px;
+    -webkit-transition: all 0.1s;
+    -moz-transition: all 0.1s;
+    transition: all 0.2s;
+  }

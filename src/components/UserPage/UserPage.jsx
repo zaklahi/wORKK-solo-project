@@ -15,7 +15,7 @@ function UserPage() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch({ type: 'FETCH_EXERCISES' });
+    dispatch({ type: 'FETCH_EXERCISES', payload: exercises });
   }, []);
 
 
@@ -25,9 +25,9 @@ function UserPage() {
   }, []);
  
  
-  const handleClickOne = () => {
-   
-    history.push(`/workout`)
+  const handleClickOne = (exercise) => {
+  
+    history.push(`/exercises/`)
   }
 
   const handleClickTwo = (workoutDisplay) => {
