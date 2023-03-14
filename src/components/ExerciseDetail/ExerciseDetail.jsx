@@ -8,7 +8,7 @@ function ExercisesDetail(props) {
 
   const dispatch = useDispatch();
   const history = useHistory();
-  const { Exercise_Id, Exercise_Type, poster } = props.exercise;
+  const { exercise_Id, exercise_type, poster } = props.exercise;
   const { exerciseId } = useParams();
 
 
@@ -19,10 +19,10 @@ function ExercisesDetail(props) {
 
 
   function handleEditClick(exercise){
-    const id = Exercise_Id
+    const id = exercise_Id
     console.log("in handle click, student: ", props.exercise);
     dispatch({ type: 'FETCH_EXERCISES', payload: props.exercise});
-    history.push(`/workout/${Exercise_Id}`);
+    history.push(`/workout/${exercise_Id}`);
   }
 
   return (
@@ -31,7 +31,7 @@ function ExercisesDetail(props) {
     <tr>
         
     
-      <td>{Exercise_Type} </td>
+      <td>{exercise_type} </td>
         </tr>
        <>
          <button onClick={handleEditClick}>SELECT</button>

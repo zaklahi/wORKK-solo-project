@@ -7,7 +7,7 @@ const router = express.Router();
 // Handles Ajax request for user information if user is authenticated
 router.get('/', (req, res) => {
 
-  const queryText = 'SELECT * FROM "Exercise" ;';
+  const queryText = 'SELECT * FROM "exercise" ;';
   pool.query(queryText ).then((result) => {
     console.log(result.rows);
     res.send(result.rows);
@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
 
-  const query = `SELECT * FROM "Exercise" WHERE "id"=$1`;
+  const query = `SELECT * FROM "exercise" WHERE "id"=$1`;
   pool.query(query, [req.params.id])
     .then(result => {
       // Return the first item in the array (which is an Object)
@@ -36,15 +36,15 @@ router.get('/:id', (req, res) => {
 router.post("/", (req, res) => {
   // post that will post onto dom   
       let sqlQuery = `
-          INSERT INTO "Exercise" 
-            ("user_id", "Exercise_Type",  )
+          INSERT INTO "exercise" 
+            ("user_id", "exercise_type",  )
           VALUES 
             ($1, $2)
         `;
       const sqlValue = [
         req.user.id,
         req.body.Exercise_Type,
-        
+
         
       ];
       pool

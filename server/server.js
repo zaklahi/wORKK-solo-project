@@ -28,6 +28,7 @@ app.use('/api/user', userRouter);
 app.use('/api/exercises', exerciseRouter);
 app.use('/api/workout', workoutExercise);
 
+
 // Serve static files
 app.use(express.static('build'));
 

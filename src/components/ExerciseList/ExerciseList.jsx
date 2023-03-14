@@ -26,7 +26,7 @@ function ExerciseList(props) {
                 </thead>
                 <tbody>
                     {exercises.map(exercise => {
-                        return <ExerciseDetail key={exercise.Exercise_Id} exercise={exercise} />
+                        return <ExerciseDetail key={exercise.exercise_Id} exercise={exercise} />
                     })}
                 </tbody>
             </table>

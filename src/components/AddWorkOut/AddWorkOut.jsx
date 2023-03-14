@@ -6,9 +6,9 @@ import axios from 'axios';
 import './AddWorkout.css'
 
 function AddWorkout(props) {
-    const workouts = useSelector( store => store.workouts );
+    const workouts = useSelector( store => store.workouts.exercisesReducer );
     const exercises = useSelector(store => store.exercises)
-    const [WorkoutDate, setWorkoutDate] = useState('');
+    const [workoutDate, setWorkoutDate] = useState('');
     const [reps, setReps] = useState('');
     const [sets, setSets] = useState('');
     const [notes, setNotes] = useState('');
@@ -19,19 +19,24 @@ function AddWorkout(props) {
     const Exercise_Type  = props.exercises;
 
     
+console.log('is workouts populating', workouts)
 
-
-    useEffect(() => {
-        dispatch({ type: 'FETCH_EXERCISES', payload: props.exercises });
-    }, [props.exercises]);
-    console.log('is exercise type showing up' ,exercises.Exercise_Type)
+    // useEffect(() => {
+    //     dispatch({ type: 'FETCH_EXERCISES', payload: props.exercises });
+    // }, [props.exercises]);
+    // console.log('is exercise type showing up' ,exercises.Exercise_Type)
 
     useEffect(() => {
         if (id) { // Return false if id is undefined
-            axios.get(`/api/workout`).then(response => {
+            axios.get(`/api/workout/`).then(response => {
                 const workout = response.data;
+                setReps(workout.reps);
+                setSets(workout.sets);
+                setNotes(workout.notes);
+                setWeight(workout.weight)
+                setWorkoutDate(workout.workoutDate)
              
-                dispatch({ type: 'FETCH_WORKOUT', payload: workout });
+         
               
 
             }).catch(error => {
@@ -51,7 +56,7 @@ function AddWorkout(props) {
         // } else {
             // ADD A MOVIE
             // Pass history with our dispatch so that the saga can redirect
-            dispatch({ type: 'ADD_WORKOUT', payload: { WorkoutDate,reps, sets, weight, notes },history });
+            dispatch({ type: 'ADD_WORKOUT', payload: { workoutDate,reps, sets, weight, notes },history });
            
         }
 
@@ -73,7 +78,7 @@ function AddWorkout(props) {
             
             <h3>{}</h3>
             <form onSubmit={submitForm}>
-            <p>Workout Date: <input value={WorkoutDate} onChange={(e) => setWorkoutDate(e.target.value)}  /></p>
+            <p>Workout Date: <input value={workoutDate} onChange={(e) => setWorkoutDate(e.target.value)}  /></p>
                 <p>Reps: <input value={reps} onChange={(e) => setReps(e.target.value)} /></p>
                 <p>Sets: <input value={sets} onChange={(e) => setSets(e.target.value)}  /></p>
                 <p>Weight: <input value={weight} onChange={(e) => setWeight(e.target.value)}  /></p>
@@ -82,11 +87,17 @@ function AddWorkout(props) {
               
                
                
-                <tbody>
-                {/* {
-                    exercises.map(genreToDisplay => <li>{genreToDisplay.Exercise_Type}</li>)
-                } */}
-                </tbody>
+                {workouts.map((workout) => (
+  <div key={workout.id}>
+    <p>{workout.WorkoutDate}</p>
+    <p>{workout.Exercise_Type}</p>
+    <p>{workout.Reps}</p>
+    <p>{workout.Sets}</p>
+    <p>{workout.Weight}</p>
+    <p>{workout.Notes}</p>
+  </div>
+))}
+
                 <input type="submit" />
             </form>
         </div>

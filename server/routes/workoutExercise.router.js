@@ -7,12 +7,11 @@ const router = express.Router();
 // Handles Ajax request for user information if user is authenticated
 router.get('/', (req, res) => {
 console.log('user is', req.user)
-  const query = `SELECT  "Workout_Exercises".*, "Exercise"."Exercise_Type"
-  FROM "Exercise"
-  JOIN "Workout_Exercises" ON "Workout_Exercises"."Exercise_Id" = "Exercise"."Exercise_Id"
-  
-  JOIN "user" ON "Workout_Exercises"."user_id" = "user"."id"
-  WHERE "user"."id"  = $1;`;
+  const query = `SELECT  "workout_exercises".*, "exercise"."exercise_type"
+  FROM "exercise"
+  RIGHT JOIN "workout_exercises" ON "workout_exercises"."exercise_Id" = "exercise"."exercise_Id"
+  JOIN "user" ON "workout_exercises"."user_id" = "user"."id"
+  WHERE "user"."id"  = $1`;
   pool.query(query, [req.user.id])
     .then( result => {
       res.send(result.rows);
@@ -26,11 +25,11 @@ console.log('user is', req.user)
 
 router.get('/', (req, res) => {
   console.log('user is', req.user)
-    const query = `SELECT  "Workout_Exercises".*, "Exercise"."Exercise_Type"
-    FROM "Exercise"
-    JOIN "Workout_Exercises" ON "Workout_Exercises"."Exercise_Id" = "Exercise"."Exercise_Id"
+    const query = `SELECT  "workout_exercises".*, "exercise"."exercise_type"
+    FROM "exercise"
+    JOIN "workout_exercises" ON "workout_exercises"."exercise_Id" = "exercise"."exercise_Id"
     
-    JOIN "user" ON "Workout_Exercises"."user_id" = "user"."id"
+    JOIN "user" ON "workout_exercises"."user_id" = "user"."id"
     WHERE "user"."id"  = $1;`;
     pool.query(query, [req.user.id])
       .then( result => {
@@ -48,9 +47,9 @@ router.post('/', (req, res) => {
   console.log(req.body)
   const userId = req.user.id
   const entry = req.body;
-  const sqlParams = [userId,  entry.WorkoutDate, entry.reps, entry.sets, entry.weight, entry.notes]
+  const sqlParams = [userId,  entry.workoutDate, entry.reps, entry.sets, entry.weight, entry.notes]
   
-  const sqlText = ` INSERT INTO "Workout_Exercises" ( "user_id"  , "WorkoutDate", "Reps", "Sets", "Weight", "Notes") 
+  const sqlText = ` INSERT INTO "workout_exercises" ( "user_id"  , "workoutDate", "reps", "sets", "weight", "notes") 
   VALUES ($1, $2, $3, $4, $5, $6 )
   RETURNING "user_id";`
   pool.query(sqlText, sqlParams)
@@ -69,13 +68,13 @@ router.post('/exercise', (req, res) => {
 
 });
 
-router.put('/', (req, res) => {
+router.put('/:id', (req, res) => {
   // Update this single student
   const userId = req.user.id
   const entry = req.body;
   const sqlParams = [userId, entry.reps, entry.sets, entry.weight, entry.notes, req.params.id]
-  const sqlText = `UPDATE "Workout_Exercises" SET "Reps" = $1, "Sets" = $2, "Weight" = $3, "Notes" = $4 
-  WHERE "WorkoutId" = $5;`;
+  const sqlText = `UPDATE "workout_exercises" SET "reps" = $1, "sets" = $2, "weight" = $3, "notes" = $4 
+  WHERE "user_id" = $5;`;
   pool.query(sqlText, [sqlParams, sqlText])
       .then((result) => {
           res.sendStatus(200);
@@ -93,16 +92,16 @@ router.delete('/:id', (req, res) => {
   if (req.isAuthenticated()){
     let id = req.params.id;
     const queryText = `
-    DELETE FROM "Workout_Exercises"
-    WHERE WorkoutId = $1;`;
+    DELETE FROM "workout_exercises"
+    WHERE id = $1;`;
     pool
       .query(queryText, [id])
       .then((result) => {
-        console.log('delete router: ', result);
+        console.log('delete route: ', result);
         res.sendStatus(202);
       })
       .catch((error) => {
-        console.log('router.delete idea error: ', error);
+        console.log('route workout  error: ', error);
         res.sendStatus(500);
       })
   } else {

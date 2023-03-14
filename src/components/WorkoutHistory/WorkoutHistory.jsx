@@ -41,21 +41,21 @@ const handleClick = () => {
   };
 
 
-    const editWorkout = (workouts) => {
+    const editWorkout = (workout) => {
         console.log('in editIdea const on ideas page');
         dispatch({
           type: 'SET_EDIT_WORKOUT',
-          payload: workouts
+          payload: workout.id
         });
         history.push(`/edit`);
       }
 
 
-    const deleteWorkout = (workouts) => {
+    const deleteWorkout = (workout) => {
         dispatch({
           type: 'DELETE_WORKOUT',
           payload: {
-            id: workouts.id
+            workout : workout
           }
         })
       }
@@ -69,15 +69,15 @@ const handleClick = () => {
           {workouts.map((workout) => (
             <div className="workout-box" key={workout.id}>
               <div className="workout-info">
-                <div className="workout-date">Date: {workout.WorkoutDate}</div>
-                <div className="exercise-type">Exercise: {workout.Exercise_Type}</div>
-                <div className="reps">Reps: {workout.Reps}</div>
-                <div className="sets">Sets: {workout.Sets}</div>
-                <div className="weight">Weight: {workout.Weight}</div>
-                <div className="notes">Notes: {workout.Notes}</div>
+                <div className="workout-date">Date: {workout.workoutDate}</div>
+                <div className="exercise-type">Exercise: {workout.exercise_type}</div>
+                <div className="reps">Reps: {workout.reps}</div>
+                <div className="sets">Sets: {workout.sets}</div>
+                <div className="weight">Weight: {workout.weight}</div>
+                <div className="notes">Notes: {workout.notes}</div>
               </div>
               <div className="button-box">
-                <button className="button confirm-button">Confirm</button>
+                <button className="button confirm-button"onClick={() => handleClick(workout)}>Confirm</button>
                 <button className="button delete-button" onClick={() => deleteWorkout(workout)}>Delete</button>
                 <button className="button edit-button" onClick={() => editWorkout(workout)}>Edit</button>
               </div>

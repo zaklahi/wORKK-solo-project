@@ -29,19 +29,19 @@ function EditForm(props) {
             <form onSubmit={handleSubmit}>
                 <input
                 onChange={(event) => handleChange(event)}
-                placeholder='Reps'
+                placeholder='reps'
                 />
                  <input
                 onChange={(event) => handleChange(event)}
-                placeholder='Sets'
+                placeholder='sets'
                 />
                  <input
                 onChange={(event) => handleChange(event)}
-                placeholder='Weights'
+                placeholder='weights'
                 />
                  <input
                 onChange={(event) => handleChange(event)}
-                placeholder='Notes'
+                placeholder='notes'
                 />
                
 

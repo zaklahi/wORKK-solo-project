@@ -60,7 +60,7 @@ function* addWorkout(action) {
       yield axios.post(`api/workout`, action.payload);
       if (action.history) {
           // Redirect back to the movie list
-          action.history.push('/history');
+          action.history.push(("/history/:id"));
       }
   } catch (e) {
       console.log(e);
@@ -88,14 +88,15 @@ function* editWorkout(action) {
 
 
 function* deleteWorkout(action) {
-  console.log(' delete action payload', action.payload);
-  const id = action.payload.id;
+  console.log(' delete  payload', action.payload);
+  const workoutObj  = action.payload.workout;
+  console.log(' id payload', workoutObj);
   try {
     const config = {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true,
     };
-    yield axios.delete(`/api/history`, config);
+    yield axios.delete(`/api/workout/${workoutObj.id}`, config);
 
     yield put({ type: 'FETCH_WORKOUTS'});
   } catch (error) {

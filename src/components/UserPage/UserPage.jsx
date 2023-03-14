@@ -30,12 +30,12 @@ function UserPage() {
  
   const handleClickOne = (exercise) => {
   
-    history.push(`/exercises/`)
+    history.push(`/exercises`)
   }
 
   const handleClickTwo = (workoutDisplay) => {
     
-    history.push(`/history`)
+    history.push(`/history/:id`)
 
   }
 
@@ -44,7 +44,7 @@ function UserPage() {
   return (
     <div className="containerz">
       <h2>Welcome, {user.username}!</h2>
-      <h3>{JSON.stringify(workouts)}</h3>
+      
       <p>GYM ID : {user.id}</p>
       <div>
       <div style={{width: '50%', height: '100vh', display: 'inline-block'}} onClick={handleClickOne}>
