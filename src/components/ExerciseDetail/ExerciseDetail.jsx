@@ -8,7 +8,7 @@ function ExercisesDetail(props) {
 
   const dispatch = useDispatch();
   const history = useHistory();
-  const { Exercise_Id, Exercise_Type } = props.exercise;
+  const { Exercise_Id, Exercise_Type, poster } = props.exercise;
   const { exerciseId } = useParams();
 
 
@@ -31,13 +31,13 @@ function ExercisesDetail(props) {
     <tr>
         
     
-      <td>{Exercise_Type}</td>
+      <td>{Exercise_Type} </td>
         </tr>
        <>
          <button onClick={handleEditClick}>SELECT</button>
        </>
       
-    
+       
     
     
     

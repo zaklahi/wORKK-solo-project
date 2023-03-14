@@ -7,12 +7,12 @@ const router = express.Router();
 // Handles Ajax request for user information if user is authenticated
 router.get('/', (req, res) => {
 console.log('user is', req.user)
-  const query = `SELECT  "UserWorkout".*, "Exercise"."Exercise_Type", "Workout_Exercises"."Reps", "Workout_Exercises"."Sets", "Workout_Exercises"."Weight"
-  FROM "UserWorkout"
-  JOIN "Workout_Exercises" ON "UserWorkout"."WorkoutId" = "Workout_Exercises"."WorkoutId"
-  JOIN "Exercise" ON "Workout_Exercises"."Exercise_Id" = "Exercise"."Exercise_Id"
-  WHERE "UserWorkout"."user_id"  = $1;
-  ;`;
+  const query = `SELECT  "Workout_Exercises".*, "Exercise"."Exercise_Type"
+  FROM "Exercise"
+  JOIN "Workout_Exercises" ON "Workout_Exercises"."Exercise_Id" = "Exercise"."Exercise_Id"
+  
+  JOIN "user" ON "Workout_Exercises"."user_id" = "user"."id"
+  WHERE "user"."id"  = $1;`;
   pool.query(query, [req.user.id])
     .then( result => {
       res.send(result.rows);
@@ -26,14 +26,15 @@ console.log('user is', req.user)
 
 router.get('/', (req, res) => {
   console.log('user is', req.user)
-    const query = `SELECT  "UserWorkout".*, "Exercise"."Exercise_Type", "Workout_Exercises"."Reps", "Workout_Exercises"."Sets", "Workout_Exercises"."Weight"
-    FROM "UserWorkout"
-    JOIN "Workout_Exercises" ON "UserWorkout"."WorkoutId" = "Workout_Exercises"."WorkoutId"
-    JOIN "Exercise" ON "Workout_Exercises"."Exercise_Id" = "Exercise"."Exercise_Id"
-    WHERE "UserWorkout"."user_id"  = $1;
-    ;`;
+    const query = `SELECT  "Workout_Exercises".*, "Exercise"."Exercise_Type"
+    FROM "Exercise"
+    JOIN "Workout_Exercises" ON "Workout_Exercises"."Exercise_Id" = "Exercise"."Exercise_Id"
+    
+    JOIN "user" ON "Workout_Exercises"."user_id" = "user"."id"
+    WHERE "user"."id"  = $1;`;
     pool.query(query, [req.user.id])
       .then( result => {
+        console.log('heres the workouts result rows', result.rows)
         res.send(result.rows);
       })
       .catch(err => {
@@ -47,11 +48,11 @@ router.post('/', (req, res) => {
   console.log(req.body)
   const userId = req.user.id
   const entry = req.body;
-  const sqlParams = [userId, entry.reps, entry.sets, entry.weight, entry.notes]
+  const sqlParams = [userId,  entry.WorkoutDate, entry.reps, entry.sets, entry.weight, entry.notes]
   
-  const sqlText = `INSERT INTO "Workout_Exercises" ( "WorkoutId", "Reps", "Sets", "Weight", "Notes") 
-  VALUES ($1, $2, $3, $4, $5)
-  RETURNING "WorkoutId";`
+  const sqlText = ` INSERT INTO "Workout_Exercises" ( "user_id"  , "WorkoutDate", "Reps", "Sets", "Weight", "Notes") 
+  VALUES ($1, $2, $3, $4, $5, $6 )
+  RETURNING "user_id";`
   pool.query(sqlText, sqlParams)
       .then((result) => {
           console.log(`Added creature to the database`, entry, userId);
@@ -68,7 +69,7 @@ router.post('/exercise', (req, res) => {
 
 });
 
-router.put('/:id', (req, res) => {
+router.put('/', (req, res) => {
   // Update this single student
   const userId = req.user.id
   const entry = req.body;
@@ -84,12 +85,6 @@ router.put('/:id', (req, res) => {
           res.sendStatus(500);
       });
 });
-
-
-
-
-
-
 
 
 router.delete('/:id', (req, res) => {

@@ -37,13 +37,14 @@ router.post("/", (req, res) => {
   // post that will post onto dom   
       let sqlQuery = `
           INSERT INTO "Exercise" 
-            ("user_id", "Exercise_Type" )
+            ("user_id", "Exercise_Type",  )
           VALUES 
             ($1, $2)
         `;
       const sqlValue = [
         req.user.id,
         req.body.Exercise_Type,
+        
         
       ];
       pool

@@ -1,4 +1,4 @@
-const exercisesReducer = (state = [], action) => {
+const exercisesReducer = (state = {}, action) => {
   switch (action.type) {
     case 'SET_EXERCISES':
       return action.payload;

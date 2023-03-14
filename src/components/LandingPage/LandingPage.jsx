@@ -14,7 +14,7 @@ function LandingPage() {
   };
 
   return (
-    <div className="container">
+    <div className="container-landingpage">
       <h2>{heading}</h2>
 
       <div className="grid">
@@ -25,10 +25,12 @@ function LandingPage() {
 
           <img src="https://phantom-marca.unidadeditorial.es/746e69f29df0fa7da1f9df1cffc2af10/crop/0x20/1499x861/resize/1320/f/jpg/assets/multimedia/imagenes/2022/01/12/16419960151339.jpg" alt="Girl in a jacket" width="1000" height="600"></img>
            
-         
-
+          pexels-rodnae-productions-7187405.mp4
+    
           <p>
-            
+          <video autoPlay muted loop id="myVideo">
+        <source src="pexels-rodnae-productions-7187405.mp4" type="video/mp4"/>
+      </video>
           </p>
         </div>
         <div className="grid-col grid-col_4">

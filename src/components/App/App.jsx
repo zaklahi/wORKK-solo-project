@@ -23,6 +23,8 @@ import AddWorkOut from '../AddWorkOut/AddWorkOut';
 
 import './App.css';
 import ExerciseList from '../ExerciseList/ExerciseList';
+import WorkoutHistory from '../WorkoutHistory/WorkoutHistory';
+import EditForm from '../EditForm/EditForm';
 
 function App() {
   const dispatch = useDispatch();
@@ -84,8 +86,25 @@ function App() {
           >
             <ExerciseList />
           </ProtectedRoute>
+          <ProtectedRoute
+            // logged in shows InfoPage else shows LoginPage
+            exact
+            path="/edit"
+          >
+            <EditForm />
+          </ProtectedRoute>
+         
+         
+          <ProtectedRoute
+            // logged in shows InfoPage else shows LoginPage
+            exact
+            path="/history"
+          >
+            <WorkoutHistory />
+          </ProtectedRoute>
 
           <ProtectedRoute
+          
             // logged in shows InfoPage else shows LoginPage
             exact
             path="/info"

@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+import './EditForm.css'
 
 function EditForm(props) {
     const history = useHistory();
@@ -10,7 +11,7 @@ function EditForm(props) {
 
     function handleSubmit(){
         dispatch({type: 'SAVE_UPDATES', payload: editWorkout});
-        history.push('/workout');
+        history.push('/history');
     }
 
     function handleChange(event) {
@@ -18,18 +19,31 @@ function EditForm(props) {
         console.log('handle change', event.target.value);
         dispatch({
             type: 'EDIT_ONCHANGE',
-            payload: { property: 'github_name', value: event.target.value }
+            payload: { property: 'reps', value: event.target.value }
         })
     }
     return (
         <>
-            <h2>Edit Student</h2>
-            <p>This is the student we're editing: {editStudent.github_name}</p>
+            <h2>Edit Workout</h2>
+            <p>This is the student we're editing: {editWorkout}</p>
             <form onSubmit={handleSubmit}>
                 <input
                 onChange={(event) => handleChange(event)}
-                placeholder='GitHub username'
+                placeholder='Reps'
                 />
+                 <input
+                onChange={(event) => handleChange(event)}
+                placeholder='Sets'
+                />
+                 <input
+                onChange={(event) => handleChange(event)}
+                placeholder='Weights'
+                />
+                 <input
+                onChange={(event) => handleChange(event)}
+                placeholder='Notes'
+                />
+               
 
                 <input type='submit' value='Update Student' />
             </form>
