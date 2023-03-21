@@ -55,7 +55,7 @@ function UserPage() {
         <p>Click to go to Section 1</p>
       </div>
       <div style={{width: '50%', height: '100vh', display: 'inline-block'}} onClick={handleClickTwo}>
-     <img src='https://e7.pngegg.com/pngimages/764/652/png-clipart-muscle-cartoon-physical-fitness-muscular-workout-dumbbell-fitness-hand.png'></img>
+     <img src='https://www.olivaclinic.com/wp-content/uploads/2021/04/14day-body-sculpting-workout-challenge.jpg'></img>
      <Button onClick={() => history.push('/')} variant="outlined" color="primary">Previous Workouts</Button>
         <h1>Previous Workouts</h1>
         <p>Click to go to Section 2</p>

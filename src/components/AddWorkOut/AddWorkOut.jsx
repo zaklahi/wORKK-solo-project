@@ -73,18 +73,32 @@ console.log('is workouts populating', workouts)
 
     return (
         <div>
-            {/* <h1>{getTitle()}</h1> */}
-            { <h1>Add Workout</h1> }
-            
-            <h3>{}</h3>
-            <form onSubmit={submitForm}>
-            <p>Workout Date: <input value={workoutDate} onChange={(e) => setWorkoutDate(e.target.value)}  /></p>
-                <p>Reps: <input value={reps} onChange={(e) => setReps(e.target.value)} /></p>
-                <p>Sets: <input value={sets} onChange={(e) => setSets(e.target.value)}  /></p>
-                <p>Weight: <input value={weight} onChange={(e) => setWeight(e.target.value)}  /></p>
-                
-                <p>Notes: <input value={notes} onChange={(e) => setNotes(e.target.value)}  /></p>
-              
+           <div class="container">
+  <h1>Add Workout</h1>
+  <form class="form" onSubmit={submitForm}>
+    <div class="form-group">
+      <label for="workoutDate">Workout Date:</label>
+      <input type="date" class="form-control" id="workoutDate" value={workoutDate} onChange={(e) => setWorkoutDate(e.target.value)} />
+    </div>
+    <div class="form-group">
+      <label for="reps">Reps:</label>
+      <input type="number" class="form-control" id="reps" value={reps} onChange={(e) => setReps(e.target.value)} />
+    </div>
+    <div class="form-group">
+      <label for="sets">Sets:</label>
+      <input type="number" class="form-control" id="sets" value={sets} onChange={(e) => setSets(e.target.value)} />
+    </div>
+    <div class="form-group">
+      <label for="weight">Weight:</label>
+      <input type="number" class="form-control" id="weight" value={weight} onChange={(e) => setWeight(e.target.value)} />
+    </div>
+    <div class="form-group">
+      <label for="notes">Notes:</label>
+      <textarea class="form-control" id="notes" rows="3" value={notes} onChange={(e) => setNotes(e.target.value)}></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
                
                
                 {workouts.map((workout) => (
@@ -98,8 +112,8 @@ console.log('is workouts populating', workouts)
   </div>
 ))}
 
-                <input type="submit" />
-            </form>
+               
+           
         </div>
     )
 }

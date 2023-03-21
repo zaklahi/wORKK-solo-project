@@ -16,21 +16,15 @@ function ExerciseList(props) {
     
 
     return (
-        <div>
-            <table>
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {exercises.map(exercise => {
-                        return <ExerciseDetail key={exercise.exercise_Id} exercise={exercise} />
-                    })}
-                </tbody>
-            </table>
-        </div>
+        <div class="exercise-container">
+    {exercises.map(exercise => {
+        return (
+            <div class="exercise-card" key={exercise.exercise_Id}>
+                <ExerciseDetail exercise={exercise} />
+            </div>
+        );
+    })}
+</div>
     );
     
 }

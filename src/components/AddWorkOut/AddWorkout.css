@@ -1,58 +1,45 @@
-.containerv {
+.container {
     max-width: 500px;
     margin: 0 auto;
     padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .title {
-    margin-top: 0;
   }
   
   .form-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
   }
   
   label {
+    display: block;
     margin-bottom: 5px;
     font-weight: bold;
   }
   
-  input {
-    padding: 8px 12px;
+  input[type="number"],
+  input[type="date"],
+  textarea {
+    display: block;
+    width: 100%;
+    padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 4px;
+    box-sizing: border-box;
   }
   
-  .delete-button {
-    margin-right: 10px;
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #fff;
-    color: #f00;
-  }
-  
-  .submit-button {
-    margin-top: 10px;
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+  button[type="submit"] {
+    display: block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
     background-color: #007bff;
     color: #fff;
     cursor: pointer;
+    transition: all 0.3s ease;
   }
   
-  .submit-button:hover {
-    background-color: #0069d9;
+  button[type="submit"]:hover {
+    background-color: #0062cc;
   }
-
-  
-  /* const reps = useSelector(store => store.repsReducer )
-  const sets = useSelector(store => store.setsReducer )
-  const notes = useSelector(store => store.notesReducer )
-  const weight = useSelector(store => store.weightReducer) */
-
+  h1 {
+    text-align: center;
+  }

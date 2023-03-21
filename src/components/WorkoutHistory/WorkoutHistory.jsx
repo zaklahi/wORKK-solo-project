@@ -5,15 +5,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+
 import axios from 'axios';
 import './WorkoutHistory.css'
-//  import AddWorkOut from '../AddWorkOut/AddWorkOut';
+//  import EditForm from '../Edit/AddWorkOut';
 
 
-const WorkoutHistory = () => {
+const WorkoutHistory = (props) => {
     const activity = useSelector(store => store)
     const exercises = useSelector(store => store.exercises);
     const workouts = useSelector(store => store.workouts.exercisesReducer);
+
+
 
 
 
@@ -34,21 +37,22 @@ const WorkoutHistory = () => {
    
   
 
-console.log('this is workouts',workouts)
+console.log('this is props',props)
 
 const handleClick = () => {
     history.push("/home");
   };
 
 
-    const editWorkout = (workout) => {
-        console.log('in editIdea const on ideas page');
-        dispatch({
-          type: 'SET_EDIT_WORKOUT',
-          payload: workout.id
-        });
-        history.push(`/edit`);
-      }
+    // const editWorkout = (workout) => {
+    //     console.log('in editIdea const on ideas page', );
+    //     dispatch({
+    //       type: 'EDIT_WORKOUT',
+    //       payload: workout
+          
+    //     });
+    //     history.push(`/edit/${workout.id}`);
+    //   }
 
 
     const deleteWorkout = (workout) => {
@@ -76,10 +80,13 @@ const handleClick = () => {
                 <div className="weight">Weight: {workout.weight}</div>
                 <div className="notes">Notes: {workout.notes}</div>
               </div>
+              
               <div className="button-box">
                 <button className="button confirm-button"onClick={() => handleClick(workout)}>Confirm</button>
                 <button className="button delete-button" onClick={() => deleteWorkout(workout)}>Delete</button>
-                <button className="button edit-button" onClick={() => editWorkout(workout)}>Edit</button>
+                <Link to={`/edit/${workout.id}`}>
+                  <button className="button edit-button">Edit</button>
+                </Link>
               </div>
             </div>
           ))}

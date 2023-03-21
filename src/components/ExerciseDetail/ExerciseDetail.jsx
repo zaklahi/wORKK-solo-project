@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import React, {useEffect} from 'react';
 import { useParams } from 'react-router-dom';
-import './ExerciseList.css'
+import './ExerciseDetail.css'
 
 function ExercisesDetail(props) {
 
@@ -34,7 +34,7 @@ function ExercisesDetail(props) {
       <td>{exercise_type} </td>
         </tr>
        <>
-         <button onClick={handleEditClick}>SELECT</button>
+       <button class="button" onClick={handleEditClick}>SELECT</button>
        </>
       
        

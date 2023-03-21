@@ -14,7 +14,7 @@ function* fetchWorkoutExcercises(action) {
     // If a user is logged in, this will return their information
     // from the server session (req.user)
     const response = yield axios.get(`/api/workout`, config);
-console.log('this is the response.data for workout', response.data)
+    console.log('this is the response.data for workout', response.data)
     // now that the session has given us a user object
     // with an id and username set the client-side user object to let
     // the client-side code know the user is logged in
@@ -24,18 +24,7 @@ console.log('this is the response.data for workout', response.data)
   }
 }
 
-function* fetchWorkoutDetails(action) {
-  console.log('what is action.payload', action.payload)
-  try {
-      const workout = yield axios.get(`/api/workout/${action.payload}`);
-      yield put({ type: 'SET_WORKOUT_DETAILS', payload: workout.data });
-      // Fetch genres
-      const exercises = yield axios.get(`/api/exercises/${action.payload}`);
-      yield put({ type: 'SET_EXERCISES', payload: exercises.data});
-  } catch (e) {
-      console.log(e);
-  }
-}
+
 
 function* createWorkout(action) {
   try {
@@ -68,23 +57,30 @@ function* addWorkout(action) {
 }
 
 function* editWorkout(action) {
+  (console.log('this is action payload in the editWorkout', action.payload))
+  const id  = action.payload.id;
   try {
-      yield axios.put(`/api/workout/${action.payload.id}`, action.payload);
-      ({
-      reps: action.payload.reps,
-      sets: action.payload.sets,
-      weight: action.payload.notes,
-      notes: action.payload.notes
-    });
+      yield axios.put(`/api/workout/${id}`, action.payload);
     yield put({ type: 'FETCH_WORKOUTS', payload: action.payload});
+    if (action.history) {
+      // Redirect back to the movie list
+      action.history.push(("/history/:id"));
+  }
   } catch (error) {
     console.log('Error editing workouts', error);
   };
 };
 
-
-
-
+function* workoutDetails(action) {
+  //get the indiviual workout from the database
+  const id = action.payload;
+  try {
+    const workout = yield axios.get(`/api/workout/${id}`)
+    yield put({ type: 'SET_THIS_WORKOUT', payload: workout.data })
+  } catch (e) {
+    console.log("oops")
+  }
+}
 
 
 function* deleteWorkout(action) {
@@ -103,25 +99,20 @@ function* deleteWorkout(action) {
     console.log('Error delete route', error);
   }
 } 
-function* saveUpdates(action){
-  console.log('in save updates', action);
-  yield axios.put(`/workout/${action.payload.id}`, action.payload);
-}
+// function* saveUpdates(action){
+//   console.log('in save updates', action);
+//   yield axios.put(`/workout/${action.payload.id}`,  {reps: action.payload.reps});
+// }
 
 
 function* workoutExercisesSaga() {
-  yield takeLatest('FETCH_WORKOUTS', fetchWorkoutExcercises
-  );
-  yield takeLatest('FETCH_WORKOUT_DETAILS', fetchWorkoutDetails
-  );
-  yield takeLatest('POST_WORKOUTS', createWorkout
-  );
+  yield takeLatest('FETCH_WORKOUTS', fetchWorkoutExcercises);
+  yield takeLatest('POST_WORKOUTS', createWorkout);
   yield takeLatest('ADD_WORKOUT', addWorkout);
   yield takeLatest('DELETE_WORKOUT', deleteWorkout);
   yield takeLatest('EDIT_WORKOUT', editWorkout);
-  yield takeLatest('SAVE_UPDATES', saveUpdates)
-
-
+  yield takeLatest('FETCH_WORKOUT_DETAILS', workoutDetails)
+  // yield takeLatest('SAVE_UPDATES', saveUpdates)
 }
 
 export default workoutExercisesSaga;

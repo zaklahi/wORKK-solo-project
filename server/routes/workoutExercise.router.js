@@ -23,6 +23,23 @@ console.log('user is', req.user)
 
 });
 
+router.get('/:id', (req, res) => {
+  const query = `SELECT  "workout_exercises".*, "exercise"."exercise_type"
+  FROM "exercise"
+  RIGHT JOIN "workout_exercises" ON "workout_exercises"."exercise_Id" = "exercise"."exercise_Id"
+  JOIN "user" ON "workout_exercises"."user_id" = "user"."id"
+  WHERE "workout_exercises"."id"  = $1`;
+  pool.query(query, [req.params.id])
+    .then(result => {
+      res.send(result.rows);
+    })
+    .catch(err => {
+      console.log('ERROR: Get all exercises', err);
+      res.sendStatus(500)
+    })
+
+});
+
 router.get('/', (req, res) => {
   console.log('user is', req.user)
     const query = `SELECT  "workout_exercises".*, "exercise"."exercise_type"
@@ -69,13 +86,12 @@ router.post('/exercise', (req, res) => {
 });
 
 router.put('/:id', (req, res) => {
-  // Update this single student
-  const userId = req.user.id
+console.log('this is req.body from router', req.body)
   const entry = req.body;
-  const sqlParams = [userId, entry.reps, entry.sets, entry.weight, entry.notes, req.params.id]
+  const sqlParams = [ entry.reps, entry.sets, entry.weight, entry.notes, entry.id]
   const sqlText = `UPDATE "workout_exercises" SET "reps" = $1, "sets" = $2, "weight" = $3, "notes" = $4 
-  WHERE "user_id" = $5;`;
-  pool.query(sqlText, [sqlParams, sqlText])
+  WHERE "id" = $5;`;
+  pool.query(sqlText, sqlParams )
       .then((result) => {
           res.sendStatus(200);
       })
