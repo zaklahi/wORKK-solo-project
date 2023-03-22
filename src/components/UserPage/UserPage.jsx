@@ -42,31 +42,33 @@ function UserPage() {
 
 
   return (
-    <div className="containerz">
-      <h2>Welcome, {user.username}!</h2>
-      
-      <p>GYM ID : {user.id}</p>
-      <div>
-      <div style={{width: '50%', height: '100vh', display: 'inline-block'}} onClick={handleClickOne}>
-
-      <img src ='https://www.muscleandfitness.com/wp-content/uploads/2018/02/Dumbbell-Preacher-Curl-1109.jpg?quality=86&strip=all'></img>
-      <Button onClick={() => history.push('/')} variant="outlined" color="primary">Start</Button>
+    <div class="containery">
+  <h2>Welcome Back, {user.username}!</h2>
+  <p class="gym-id">GYM ID : {user.id}</p>
+  
+  <div class="workout-sections">
+    <div class="workout-section" onClick={handleClickOne}>
+      <img src="https://www.muscleandfitness.com/wp-content/uploads/2018/02/Dumbbell-Preacher-Curl-1109.jpg?quality=86&amp;strip=all" alt="Section 1"/>
+      <div class="overlay">
         <h1>New Workout</h1>
-        <p>Click to go to Section 1</p>
+     
+        <button onClick={() => history.push('/')} class="start-button">Start</button>
       </div>
-      <div style={{width: '50%', height: '100vh', display: 'inline-block'}} onClick={handleClickTwo}>
-     <img src='https://www.olivaclinic.com/wp-content/uploads/2021/04/14day-body-sculpting-workout-challenge.jpg'></img>
-     <Button onClick={() => history.push('/')} variant="outlined" color="primary">Previous Workouts</Button>
+    </div>
+    
+    <div class="workout-section" onClick={handleClickTwo}>
+      <img src="https://www.olivaclinic.com/wp-content/uploads/2021/04/14day-body-sculpting-workout-challenge.jpg" alt="Section 2"/> 
+      <div class="overlay">
         <h1>Previous Workouts</h1>
-        <p>Click to go to Section 2</p>
-
+        <button onClick={() => history.push('/')} class="start-button">View</button>
       </div>
     </div>
-
-      <LogOutButton className="btn" />
-    </div>
+  </div>
+  
+  <LogOutButton class="logout-button" />
+</div>
   );
 }
 
-// this allows us to use <App /> in index.js
+
 export default UserPage;

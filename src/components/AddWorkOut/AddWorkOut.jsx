@@ -19,7 +19,7 @@ function AddWorkout(props) {
     const Exercise_Type  = props.exercises;
 
     
-console.log('is workouts populating', workouts)
+
 
     // useEffect(() => {
     //     dispatch({ type: 'FETCH_EXERCISES', payload: props.exercises });
